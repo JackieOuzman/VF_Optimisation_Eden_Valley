@@ -10,15 +10,141 @@ library(sf)
 
 
 ############################################################################################
-############       bring in data created in step1a           ##############################
+############       bring in data           ##############################
 ############################################################################################
 
 path_step1 <- "W:/VF/Optimising_VF/Chiswick/data_prep/"
 raw_data <- "W:/VF/Optimising_VF/raw_data/Chiswick/"
 
-animal_GPS_data_1 <- read_csv(paste0(raw_data, "db_trial_csiro_armidale_chiswick_mob_259_filtered.csv"))
-animal_GPS_data_2 <- read_csv(paste0(raw_data, "db_trial_csiro_armidale_chiswick_neckband_serial_9380142_filtered.csv"))
-GPS <- rbind(animal_GPS_data_1, animal_GPS_data_2)
+### These are massive and I can't run them on my machine or the virtual machine I normally use I have used pearcey running the following scripts
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1a_bring_in_data.R"
+#This just meregres the raw data
+
+VF_week1_2_3_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/download2_R_output/VF_week1_2_3_InclusionBord.rds")
+dim(VF_week1_2_3_InclusionBord)
+
+
+
+
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1a_bring_in_data_forVF5.R"
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1b_bring_in_data.R"
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1c_bring_in_data.R"
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1d_bring_in_data.R"
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1e_bring_in_data.R"
+# "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1f_bring_in_data.R"
+
+# to produce the following files
+
+"\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\sp_VF1_InclusionBord_animalID.csv"
+"\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\sp_VF2_InclusionBord_animalID.csv"
+"\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\sp_VF3_InclusionBord_animalID.csv"
+"\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\sp_VF4_InclusionBord_animalID.csv"
+
+#these files have been 
+#1. Filtered so records with no GPS are removed
+#2. Collar ID is converted to a collar ID and time clm (where the time is set to TZ = GMT)
+#3. the Collar ID and animal ID has been adjusted so that the data accommodated changes in collar ID.
+#4. calculates the distance from the VF
+#5. Calculates is the animals is in the grazing or non grazing zone
+#6. Clipped to the hard fences
+
+
+
+
+### I cant find the script that merges these but it looks like this is the merged file.
+
+VF1 <- read_csv("//pearceyhome.csiro.au/HOME_INTEL/ouz001/VF_cattle/catlle_pearcey_recal_dist/Re_cal/sp_VF1_InclusionBord_animalID.csv")
+VF2 <- read_csv("//pearceyhome.csiro.au/HOME_INTEL/ouz001/VF_cattle/catlle_pearcey_recal_dist/Re_cal/sp_VF2_InclusionBord_animalID.csv")
+VF3 <- read_csv("//pearceyhome.csiro.au/HOME_INTEL/ouz001/VF_cattle/catlle_pearcey_recal_dist/Re_cal/sp_VF3_InclusionBord_animalID.csv")
+VF4 <- read_csv("//pearceyhome.csiro.au/HOME_INTEL/ouz001/VF_cattle/catlle_pearcey_recal_dist/Re_cal/sp_VF4_InclusionBord_animalID.csv")
+
+
+
+VF1_VF4 <-rbind(VF1, VF2, VF3, VF4)
+dim(VF1_VF4)
+
+rm(VF1, VF2, VF3, VF4)
+
+
+
+################################################################################
+### Umm this is a problem because the workflow is slighly different.
+## Lets see if I can trim based on time first
+
+
+VF1_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
+                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
+                                    as_datetime('2019-05-20 14:40:00', tz="GMT")))
+
+
+
+##########################################################################################################
+#############    assign the collar ID to animal ID  ########################################################
+##########################################################################################################
+#bring in the sp_VF1_InclusionBord_clip if needed.
+
+
+
+
+### changed the start time for could of renames
+
+sp_VF1_InclusionBord_animalID <- mutate(VF1_InclusionBord,
+                                        animal_ID = case_when(
+                                          collar_ID == "ac138" ~ "Q46",
+                                          collar_ID == "ac187" ~ "Q36",
+                                          collar_ID == "ac204" ~ "Q108",
+                                          collar_ID == "ac207" ~ "Q42",
+                                          collar_ID == "ac212" ~ "Q29",
+                                          collar_ID == "ac213" &
+                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
+                                                    as_datetime('2019-05-28 06:44:00', tz="GMT")) ~ "Q47",
+                                          collar_ID == "ac320" &
+                                            between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
+                                                    as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+                                          collar_ID == "ac217" ~ "Q27",
+                                          collar_ID == "ac218" ~ "Q2",
+                                          collar_ID == "ac219" &
+                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
+                                                    as_datetime('2019-05-25 11:10:00', tz="GMT"))~ "Q10",
+                                          collar_ID == "ac220" &
+                                            between(time, as_datetime('2019-05-25 11:01:00', tz="GMT"),
+                                                    as_datetime('2019-06-06 17:27:18', tz="GMT"))~ "Q10",
+                                          collar_ID == "ac325" ~ "Q9",
+                                          collar_ID == "ac328" ~ "Q109",
+                                          collar_ID == "ac331" ~ "Q51",
+                                          collar_ID == "ad1945" ~ "Q28",
+                                          collar_ID == "ad2042" ~ "Q26",
+                                          collar_ID == "ad2043" ~ "Q75",
+                                          collar_ID == "ad3374" ~ "Q11",
+                                          collar_ID == "ad3396"  &
+                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
+                                                    as_datetime('2019-05-27 16:19:00', tz="GMT"))~ "Q45",
+                                          collar_ID == "ac209"  &
+                                            between(time, as_datetime('2019-05-28 11:11:00', tz="GMT"),
+                                                    as_datetime('2019-06-06 17:00:00', tz="GMT"))~ "Q45",
+                                          collar_ID == "ad3471" ~ "Q15",
+                                          collar_ID == "ad3502" ~ "Q8",
+                                          collar_ID == "ad3925" ~ "Q110",
+                                          TRUE ~ "NA"))
+
+#check we are assignining all the collar ID to animal names
+head(sp_VF1_InclusionBord_animalID)
+with(sp_VF1_InclusionBord_animalID, table(date, animal_ID))
+
+#the location of the NA
+NA_sp_VF1_InclusionBord_animalID <- filter(sp_VF1_InclusionBord_animalID,
+                                           animal_ID == "NA")
+with(NA_sp_VF1_InclusionBord_animalID, table(date, collar_ID))
+
+
+
+
+
+
+
+
+
+
 
 
 str(GPS)
