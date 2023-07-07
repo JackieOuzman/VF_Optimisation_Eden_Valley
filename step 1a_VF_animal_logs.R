@@ -10,11 +10,11 @@ library(sf)
 
 
 ############################################################################################
-############       bring in data           ##############################
+########    bring in data  this is a massive mess and heaps of data ########################
 ############################################################################################
 
-path_step1 <- "W:/VF/Optimising_VF/Chiswick/data_prep/"
-raw_data <- "W:/VF/Optimising_VF/raw_data/Chiswick/"
+path_step1 <- "W:/VF/Optimising_VF/Eden_Valley/data_prep/"
+raw_data <- "W:/VF/Optimising_VF/raw_data/Eden_Valley/"
 
 ### These are massive and I can't run them on my machine or the virtual machine I normally use I have used pearcey running the following scripts
 
@@ -23,12 +23,19 @@ raw_data <- "W:/VF/Optimising_VF/raw_data/Chiswick/"
 
 VF_week1_2_3_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/download2_R_output/VF_week1_2_3_InclusionBord.rds")
 dim(VF_week1_2_3_InclusionBord)
+################################################################################
+###                    Local local_time          #############
+################################################################################
+str(VF_week1_2_3_InclusionBord)
 
+VF_week1_2_3_InclusionBord <- VF_week1_2_3_InclusionBord %>% 
+  mutate(local_time =  ymd_hms(local_time, tz= "Australia/Adelaide"))
 
+    
 ################################################################################
 ### Umm this is a problem because the workflow is slightly different.
 ## Lets see if I can trim based on time first first I will 
-#1. Collar ID is converted to a collar ID and time clm (where the time is set to TZ = GMT)
+#1. Collar ID is converted to a collar ID and time clm (where the time is set to TZ = Australia/Adelaide)
 #2. the Collar ID and animal ID has been adjusted so that the data accommodated changes in collar ID.
 
 
@@ -38,9 +45,12 @@ dim(VF_week1_2_3_InclusionBord)
 
 
 VF1_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
-                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                    as_datetime('2019-05-20 14:40:00', tz="GMT")))
+                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                    ymd_hms('2019-05-20 14:40:00', tz="Australia/Adelaide")))
 
+
+min(VF1_InclusionBord$local_time)
+max(VF1_InclusionBord$local_time)
 ##########################################################################################################
 #############    assign the collar ID to animal ID  VF 1 ########################################################
 ##########################################################################################################
@@ -54,19 +64,19 @@ VF1_InclusionBord <- mutate(VF1_InclusionBord,
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-28 06:44:00', tz="GMT")) ~ "Q47",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-28 06:44:00', tz="Australia/Adelaide")) ~ "Q47",
                                           collar_ID == "ac320" &
-                                            between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+                                            between(local_time, ymd_hms('2019-05-28 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:00', tz="Australia/Adelaide")) ~ "Q47" ,
                                           collar_ID == "ac217" ~ "Q27",
                                           collar_ID == "ac218" ~ "Q2",
                                           collar_ID == "ac219" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-25 11:10:00', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-25 11:10:00', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac220" &
-                                            between(time, as_datetime('2019-05-25 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:18', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-25 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:18', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac325" ~ "Q9",
                                           collar_ID == "ac328" ~ "Q109",
                                           collar_ID == "ac331" ~ "Q51",
@@ -75,11 +85,11 @@ VF1_InclusionBord <- mutate(VF1_InclusionBord,
                                           collar_ID == "ad2043" ~ "Q75",
                                           collar_ID == "ad3374" ~ "Q11",
                                           collar_ID == "ad3396"  &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-27 16:19:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-27 16:19:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ac209"  &
-                                            between(time, as_datetime('2019-05-28 11:11:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:00:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-28 11:11:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:00:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ad3471" ~ "Q15",
                                           collar_ID == "ad3502" ~ "Q8",
                                           collar_ID == "ad3925" ~ "Q110",
@@ -104,9 +114,10 @@ with(NA_VF1_InclusionBord, table(date, collar_ID))
 
 
 VF2_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
-                            between(time, as_datetime('2019-05-20 14:50:00', tz="GMT"),
-                                    as_datetime('2019-05-23 08:30:00', tz="GMT")))
-
+                            between(local_time, ymd_hms('2019-05-20 14:50:00', tz="Australia/Adelaide"),
+                                    ymd_hms('2019-05-23 08:30:00', tz="Australia/Adelaide")))
+min(VF2_InclusionBord$local_time)
+max(VF2_InclusionBord$local_time)
 ##########################################################################################################
 #############    assign the collar ID to animal ID  VF 21 ########################################################
 ##########################################################################################################
@@ -118,19 +129,19 @@ VF2_InclusionBord <- mutate(VF2_InclusionBord,
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-28 06:44:00', tz="GMT")) ~ "Q47",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-28 06:44:00', tz="Australia/Adelaide")) ~ "Q47",
                                           collar_ID == "ac320" &
-                                            between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+                                            between(local_time, ymd_hms('2019-05-28 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:00', tz="Australia/Adelaide")) ~ "Q47" ,
                                           collar_ID == "ac217" ~ "Q27",
                                           collar_ID == "ac218" ~ "Q2",
                                           collar_ID == "ac219" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-25 11:10:00', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-25 11:10:00', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac220" &
-                                            between(time, as_datetime('2019-05-25 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:18', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-25 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:18', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac325" ~ "Q9",
                                           collar_ID == "ac328" ~ "Q109",
                                           collar_ID == "ac331" ~ "Q51",
@@ -139,11 +150,11 @@ VF2_InclusionBord <- mutate(VF2_InclusionBord,
                                           collar_ID == "ad2043" ~ "Q75",
                                           collar_ID == "ad3374" ~ "Q11",
                                           collar_ID == "ad3396"  &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-27 16:19:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-27 16:19:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ac209"  &
-                                            between(time, as_datetime('2019-05-28 11:11:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:00:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-28 11:11:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:00:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ad3471" ~ "Q15",
                                           collar_ID == "ad3502" ~ "Q8",
                                           collar_ID == "ad3925" ~ "Q110",
@@ -153,7 +164,10 @@ VF2_InclusionBord <- mutate(VF2_InclusionBord,
 head(VF2_InclusionBord)
 with(VF2_InclusionBord, table(date, animal_ID))
 
-
+#the location of the NA
+NA_VF2_InclusionBord <- filter(VF2_InclusionBord,
+                               animal_ID == "NA")
+with(NA_VF2_InclusionBord, table(date, collar_ID))
 
 ##########################################################################################################
 #############                VF 3                 ########################################################
@@ -161,9 +175,10 @@ with(VF2_InclusionBord, table(date, animal_ID))
 
 
 VF3_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
-                            between(time, as_datetime('2019-05-23 08:30:00', tz="GMT"),
-                                    as_datetime('2019-05-28 11:00:00', tz="GMT")))
-
+                            between(local_time, ymd_hms('2019-05-23 08:30:00', tz="Australia/Adelaide"),
+                                    ymd_hms('2019-05-28 11:00:00', tz="Australia/Adelaide")))
+min(VF3_InclusionBord$local_time)
+max(VF3_InclusionBord$local_time)
 
 VF3_InclusionBord <- mutate(VF3_InclusionBord,
                                         animal_ID = case_when(
@@ -173,19 +188,19 @@ VF3_InclusionBord <- mutate(VF3_InclusionBord,
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-28 06:44:00', tz="GMT")) ~ "Q47",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-28 06:44:00', tz="Australia/Adelaide")) ~ "Q47",
                                           collar_ID == "ac320" &
-                                            between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+                                            between(local_time, ymd_hms('2019-05-28 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:00', tz="Australia/Adelaide")) ~ "Q47" ,
                                           collar_ID == "ac217" ~ "Q27",
                                           collar_ID == "ac218" ~ "Q2",
                                           collar_ID == "ac219" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-25 11:10:00', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-25 11:10:00', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac220" &
-                                            between(time, as_datetime('2019-05-25 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:18', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-25 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:18', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac325" ~ "Q9",
                                           collar_ID == "ac328" ~ "Q109",
                                           collar_ID == "ac331" ~ "Q51",
@@ -194,11 +209,11 @@ VF3_InclusionBord <- mutate(VF3_InclusionBord,
                                           collar_ID == "ad2043" ~ "Q75",
                                           collar_ID == "ad3374" ~ "Q11",
                                           collar_ID == "ad3396"  &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-27 16:19:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-27 16:19:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ac209"  &
-                                            between(time, as_datetime('2019-05-28 11:11:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:00:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-28 11:11:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:00:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ad3471" ~ "Q15",
                                           collar_ID == "ad3502" ~ "Q8",
                                           collar_ID == "ad3925" ~ "Q110",
@@ -209,10 +224,9 @@ head(VF3_InclusionBord)
 with(VF3_InclusionBord, table(date, animal_ID))
 
 #the location of the NA
-NA_sp_VF3_InclusionBord_animalID <- filter(sp_VF3_InclusionBord_animalID,
+NA_VF3_InclusionBord <- filter(VF3_InclusionBord,
                                            animal_ID == "NA")
-with(NA_sp_VF3_InclusionBord_animalID, table(date, collar_ID))
-
+with(NA_VF3_InclusionBord, table(date, collar_ID))
 
 
 
@@ -221,11 +235,13 @@ with(NA_sp_VF3_InclusionBord_animalID, table(date, collar_ID))
 ##########################################################################################################
 
 
-#Fence 4 called bron next training fence check that the time range is working
+#Fence 4 called bron next training fence check that the local_time range is working
 VF4_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
-                            between(time, as_datetime('2019-05-28 11:15:00', tz="GMT"),
-                                    as_datetime('2019-06-03 09:30:00', tz="GMT")))
+                            between(local_time, ymd_hms('2019-05-28 11:15:00', tz="Australia/Adelaide"),
+                                    ymd_hms('2019-06-03 09:30:00', tz="Australia/Adelaide")))
 
+min(VF4_InclusionBord$local_time)
+max(VF4_InclusionBord$local_time)
 
 VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                         animal_ID = case_when(
@@ -235,19 +251,19 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-28 06:44:00', tz="GMT")) ~ "Q47",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-28 06:44:00', tz="Australia/Adelaide")) ~ "Q47",
                                           collar_ID == "ac320" &
-                                            between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+                                            between(local_time, ymd_hms('2019-05-28 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:00', tz="Australia/Adelaide")) ~ "Q47" ,
                                           collar_ID == "ac217" ~ "Q27",
                                           collar_ID == "ac218" ~ "Q2",
                                           collar_ID == "ac219" &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-25 11:10:00', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-25 11:10:00', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac220" &
-                                            between(time, as_datetime('2019-05-25 11:01:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:27:18', tz="GMT"))~ "Q10",
+                                            between(local_time, ymd_hms('2019-05-25 11:01:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:27:18', tz="Australia/Adelaide"))~ "Q10",
                                           collar_ID == "ac325" ~ "Q9",
                                           collar_ID == "ac328" ~ "Q109",
                                           collar_ID == "ac331" ~ "Q51",
@@ -256,11 +272,11 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                           collar_ID == "ad2043" ~ "Q75",
                                           collar_ID == "ad3374" ~ "Q11",
                                           collar_ID == "ad3396"  &
-                                            between(time, as_datetime('2019-05-20 10:15:00', tz="GMT"),
-                                                    as_datetime('2019-05-27 16:19:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-05-27 16:19:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ac209"  &
-                                            between(time, as_datetime('2019-05-28 11:11:00', tz="GMT"),
-                                                    as_datetime('2019-06-06 17:00:00', tz="GMT"))~ "Q45",
+                                            between(local_time, ymd_hms('2019-05-28 11:11:00', tz="Australia/Adelaide"),
+                                                    ymd_hms('2019-06-06 17:00:00', tz="Australia/Adelaide"))~ "Q45",
                                           collar_ID == "ad3471" ~ "Q15",
                                           collar_ID == "ad3502" ~ "Q8",
                                           collar_ID == "ad3925" ~ "Q110",
@@ -273,12 +289,15 @@ with(VF4_InclusionBord, table(date, animal_ID))
 check <- rbind(VF1_InclusionBord, VF2_InclusionBord, VF3_InclusionBord, VF4_InclusionBord)
 
 
-names(check)
-max(check$time)
-min(check$time)
+##########################################################################################################
+#####               VF 5   This dataset is not long enough      ##########################################
+##########################################################################################################
+
+#Fence 5 
+VF5_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
+                            between(local_time, ymd_hms('2019-06-03 09:31:00', tz="Australia/Adelaide"),
+                                    ymd_hms('2019-07-02 06:11:00', tz="Australia/Adelaide"))) #ends at 2019-06-06 23:59:56 ACST
 
 
-max(VF_week1_2_3_InclusionBord$time)
-min(VF_week1_2_3_InclusionBord$time)
-
-#
+min(VF5_InclusionBord$local_time)
+max(VF5_InclusionBord$local_time)
