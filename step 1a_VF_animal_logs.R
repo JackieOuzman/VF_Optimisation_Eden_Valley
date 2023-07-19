@@ -29,7 +29,7 @@ dim(VF_week1_2_3_InclusionBord)
 str(VF_week1_2_3_InclusionBord)
 
 VF_week1_2_3_InclusionBord <- VF_week1_2_3_InclusionBord %>% 
-  mutate(local_time =  ymd_hms(local_time, tz= "Australia/Adelaide"))
+  mutate(local_time =  ymd_hms(time, tz= "Australia/Adelaide"))
 
     
 ################################################################################
@@ -247,7 +247,8 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                         animal_ID = case_when(
                                           collar_ID == "ac138" ~ "Q46",
                                           collar_ID == "ac187" ~ "Q36",
-                                          collar_ID == "ac204" ~ "Q108",
+                                          #collar_ID == "ac204" ~ "Q108",
+                                          collar_ID == "ac220" ~ "Q108", # replaced with 220 on the 28th
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
@@ -257,7 +258,7 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                             between(local_time, ymd_hms('2019-05-28 11:01:00', tz="Australia/Adelaide"),
                                                     ymd_hms('2019-06-06 17:27:00', tz="Australia/Adelaide")) ~ "Q47" ,
                                           collar_ID == "ac217" ~ "Q27",
-                                          collar_ID == "ac218" ~ "Q2",
+                                          collar_ID == "ac218" ~ "Q2",#problem with battery on unit
                                           collar_ID == "ac219" &
                                             between(local_time, ymd_hms('2019-05-20 10:15:00', tz="Australia/Adelaide"),
                                                     ymd_hms('2019-05-25 11:10:00', tz="Australia/Adelaide"))~ "Q10",
@@ -287,6 +288,7 @@ head(VF4_InclusionBord)
 with(VF4_InclusionBord, table(date, animal_ID))
 
 check <- rbind(VF1_InclusionBord, VF2_InclusionBord, VF3_InclusionBord, VF4_InclusionBord)
+
 
 
 ##########################################################################################################
