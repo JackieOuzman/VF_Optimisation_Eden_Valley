@@ -431,4 +431,4 @@ with(NA_VF5_InclusionBord, table(date, collar_ID))
 
 
 
-saveRDS(NA_VF5_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF5_InclusionBord.rds")
+saveRDS(VF5_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF5_InclusionBord.rds")
