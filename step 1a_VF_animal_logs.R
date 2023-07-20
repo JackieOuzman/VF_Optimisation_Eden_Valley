@@ -290,6 +290,14 @@ with(VF4_InclusionBord, table(date, animal_ID))
 check <- rbind(VF1_InclusionBord, VF2_InclusionBord, VF3_InclusionBord, VF4_InclusionBord)
 
 
+##########################################################################################################
+## save files ###
+saveRDS(VF1_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF1_InclusionBord.rds")
+saveRDS(VF2_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF2_InclusionBord.rds")
+saveRDS(VF3_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF3_InclusionBord.rds")
+saveRDS(VF4_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF4_InclusionBord.rds")
+
+
 
 ##########################################################################################################
 #####               VF 5   week 3  onwards                      ##########################################
@@ -421,3 +429,6 @@ NA_VF5_InclusionBord <- filter(VF5_InclusionBord,
                                animal_ID == "NA")
 with(NA_VF5_InclusionBord, table(date, collar_ID))
 
+
+
+saveRDS(NA_VF5_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF5_InclusionBord.rds")
