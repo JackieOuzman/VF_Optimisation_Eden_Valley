@@ -292,14 +292,132 @@ check <- rbind(VF1_InclusionBord, VF2_InclusionBord, VF3_InclusionBord, VF4_Incl
 
 
 ##########################################################################################################
-#####               VF 5   This dataset is not long enough      ##########################################
+#####               VF 5   week 3  onwards                      ##########################################
 ##########################################################################################################
 
-#Fence 5 
-VF5_InclusionBord <- filter(VF_week1_2_3_InclusionBord, 
+VF_week3_4_5_6_7_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/updated collar logs/VF_week3_4_5_6_7.rds")
+dim(VF_week3_4_5_6_7_InclusionBord)
+################################################################################
+###                    Local local_time          #############
+################################################################################
+str(VF_week3_4_5_6_7_InclusionBord)
+
+VF_week3_4_5_6_7_InclusionBord <- VF_week3_4_5_6_7_InclusionBord %>% 
+  mutate(local_time =  ymd_hms(time, tz= "Australia/Adelaide"))
+
+
+################################################################################
+VF5_InclusionBord <- filter(VF_week3_4_5_6_7_InclusionBord, 
                             between(local_time, ymd_hms('2019-06-03 09:31:00', tz="Australia/Adelaide"),
                                     ymd_hms('2019-07-02 06:11:00', tz="Australia/Adelaide"))) #ends at 2019-06-06 23:59:56 ACST
 
 
 min(VF5_InclusionBord$local_time)
 max(VF5_InclusionBord$local_time)
+
+VF5_InclusionBord <- mutate(
+  VF5_InclusionBord,
+  animal_ID = case_when(
+    
+    collar_ID == "ac218" ~ "Q2", #missing a heap of these records for multiple days - note in file says its 'low power'
+    collar_ID == "ad2658" ~  "Q2",
+    
+    collar_ID == "ac204" ~ "Q108", #missing a heap of these records for multiple days - note in file says its 'low power'
+    collar_ID == "ad2637" ~ "Q108",
+    
+    collar_ID == "ad2042" ~ "Q26",
+    collar_ID == "ad2655" ~ "Q26",
+    #collar_ID == "ad2650" ~ "Q26", # the notes say this is cow75
+    collar_ID == "ad2643" ~ "Q26", # 
+    
+    collar_ID == "ac138" ~ "Q46",
+    collar_ID == "ac187" ~ "Q36",
+    
+    collar_ID == "ac207" ~ "Q42",
+    collar_ID == "ac212" ~ "Q29",
+    collar_ID == "ac213" &
+      between(
+        time,
+        as_datetime('2019-05-20 10:15:00', tz = "GMT"),
+        as_datetime('2019-05-28 07:00:00', tz = "GMT")
+      ) ~ "Q47",
+    #collar_ID == "ac320" &
+    #  between(time, as_datetime('2019-05-28 11:01:00', tz="GMT"),
+    #           as_datetime('2019-06-06 17:27:00', tz="GMT")) ~ "Q47" ,
+    collar_ID == "ac320" ~ "Q47",
+    collar_ID == "ac217" ~ "Q27",
+    
+    collar_ID == "ac219" &
+      between(
+        time,
+        as_datetime('2019-05-20 10:15:00', tz = "GMT"),
+        as_datetime('2019-05-25 11:10:00', tz =
+                      "GMT")
+      ) ~ "Q10",
+    collar_ID == "ac220" &
+      between(
+        time,
+        as_datetime('2019-05-25 10:55:00', tz = "GMT"),
+        as_datetime('2019-06-06 17:27:18', tz =
+                      "GMT")
+      ) ~ "Q10",
+    collar_ID == "ac325" ~ "Q9",
+    collar_ID == "ac328" ~ "Q109",
+    collar_ID == "ac331" ~ "Q51",
+    collar_ID == "ad1945" ~ "Q28",
+   
+    collar_ID == "ad2043" ~ "Q75",
+    collar_ID == "ad3374" ~ "Q11",
+    collar_ID == "ad3396"  &
+      between(
+        time,
+        as_datetime('2019-05-20 10:15:00', tz = "GMT"),
+        as_datetime('2019-05-27 16:25:00', tz =
+                      "GMT")
+      ) ~ "Q45",
+    collar_ID == "ac209"  &
+      between(
+        time,
+        as_datetime('2019-05-28 11:11:00', tz = "GMT"),
+        as_datetime('2019-06-06 17:00:00', tz =
+                      "GMT")
+      ) ~ "Q45",
+    collar_ID == "ad3471" ~ "Q15",
+    collar_ID == "ad3502" ~ "Q8",
+    collar_ID == "ad3925" ~ "Q110",
+    collar_ID == "ad2644" ~ "Q46",
+    collar_ID == "ad2640" ~ "Q36",
+    collar_ID == "ad2643" ~ "Q36",
+    
+    collar_ID == "ad2645" ~ "Q42",
+    collar_ID == "ad2649" ~ "Q29",
+    collar_ID == "ad2635" ~ "Q47",
+    collar_ID == "ad2638" ~ "Q27",
+    
+    collar_ID == "ad2647" ~ "Q10",
+    collar_ID == "ad2646" ~ "Q9",
+    collar_ID == "ad2648" ~ "Q109",
+    collar_ID == "ad2639" ~ "Q51",
+    collar_ID == "ad2656" ~ "Q28",
+    
+    collar_ID == "ad2653" ~ "Q75",
+    collar_ID == "ad2650" ~ "Q75", #who knows the notes are a mess - just follwing the notes
+    
+    collar_ID == "ad2634" ~ "Q11",
+    collar_ID == "ad2654" ~ "Q45",
+    collar_ID == "ad2651" ~ "Q15",
+    collar_ID == "ad2633" ~ "Q8",
+    collar_ID == "ad2657" ~ "Q110",
+    TRUE ~ "NA"
+  )
+)
+
+#check we are assignining all the collar ID to animal names
+head(VF5_InclusionBord)
+with(VF5_InclusionBord, table(date, animal_ID))
+
+#the location of the NA
+NA_VF5_InclusionBord <- filter(VF5_InclusionBord,
+                               animal_ID == "NA")
+with(NA_VF5_InclusionBord, table(date, collar_ID))
+
