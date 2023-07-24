@@ -25,6 +25,7 @@ GPS <-   st_as_sf(GPS,
 names(GPS)
 GPS <- GPS %>% dplyr::select (ID_jaxs, #got
                               animal_ID, #got
+                              time,
                               local_time, #got
                               date,#got
                               DOY, #got
@@ -182,16 +183,16 @@ VF_2_line <-  st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/Fenc
 str(GPS)
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
-  geom_sf(data = VF_2_line, color = "red", fill = NA) +
-  
-  geom_sf(data = GPS ,alpha = 0.03) +
-  theme_bw()+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "check")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
+#   geom_sf(data = VF_2_line, color = "red", fill = NA) +
+#   
+#   geom_sf(data = GPS ,alpha = 0.03) +
+#   theme_bw()+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "check")
 
 
 ############################################################################################
@@ -294,16 +295,16 @@ VF_3_line <-  st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/Fenc
 str(GPS)
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
-  geom_sf(data = VF_2_line, color = "red", fill = NA) +
-  
-  geom_sf(data = GPS ,alpha = 0.03) +
-  theme_bw()+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "check")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
+#   geom_sf(data = VF_2_line, color = "red", fill = NA) +
+#   
+#   geom_sf(data = GPS ,alpha = 0.03) +
+#   theme_bw()+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "check")
 
 
 ############################################################################################
@@ -412,16 +413,16 @@ VF_4_line <-  st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/Fenc
 str(GPS)
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
-  geom_sf(data = VF_2_line, color = "red", fill = NA) +
-  
-  geom_sf(data = GPS ,alpha = 0.03) +
-  theme_bw()+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "check")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
+#   geom_sf(data = VF_2_line, color = "red", fill = NA) +
+#   
+#   geom_sf(data = GPS ,alpha = 0.03) +
+#   theme_bw()+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "check")
 
 
 ############################################################################################
@@ -528,16 +529,16 @@ VF_5_line <-  st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/Fenc
 str(GPS)
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
-  geom_sf(data = VF_2_line, color = "red", fill = NA) +
-  
-  geom_sf(data = GPS ,alpha = 0.03) +
-  theme_bw()+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "check")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF2_paddock, color = "blue", fill = NA) +
+#   geom_sf(data = VF_2_line, color = "red", fill = NA) +
+#   
+#   geom_sf(data = GPS ,alpha = 0.03) +
+#   theme_bw()+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "check")
 
 
 ############################################################################################
