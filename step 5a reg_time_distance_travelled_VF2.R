@@ -16,7 +16,7 @@ library(sf)
 ################################################################################
 #### --------------    Bring in data   -------------- ####
 ################################################################################
-GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step4/VF2_step4.rds")
+GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step4/VF3_step4.rds")
 
 names(GPS_Dist)
 
@@ -49,15 +49,15 @@ str(GPS_Dist)
 start <- min(GPS_Dist$local_time, na.rm = TRUE)  # "
 end <-   max(GPS_Dist$local_time, na.rm = TRUE) # "
 #Since we’re dealing with elapsed time between two dates, let’s start with Intervals. We can define an Interval using the %--% operator.
-start <- round_date(start, unit="10 mins") #2019-05-20 14:50:00 ACST"
-end <- round_date(end, unit="10 mins") # "2019-05-23 08:30:00 ACST"
+start <- round_date(start, unit="10 mins") #2019-05-23 08:30:00 ACST"
+end <- round_date(end, unit="10 mins") # "2019-05-28 11:00:00 ACST"
 
 time.interval <- start %--% end
 time.interval
 #To create a Duration between these two dates, we can use the as.duration function.
 
 time.duration <- as.duration(time.interval)
-time.duration # "236400s (~2.74 days)"
+time.duration # "441000s (~5.1 days)"
 
 ################################################################################
 #### --------------    make a regular time step   -------------- ####
@@ -72,7 +72,7 @@ regular_time_interval <-data.frame(time_step = seq(from = ymd_hms(start),
 ################################################################################
 
 
-saveRDS(regular_time_interval,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5/VF2_regular_time_interval.rds")
+saveRDS(regular_time_interval,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5/VF3_regular_time_interval.rds")
 
 
 
@@ -100,7 +100,7 @@ dim(animal_list)
 ### 20 animals ID I need regular time interval for each animal
 ### List of sites I want to run analysis for:
 animal_list
-#sheep_list <- c(1:6)
+
 #animal_list <- "Q10"
 animal_list <- animal_list$animal
 
@@ -239,7 +239,7 @@ GPS_animal_reg_time_step_all <- rbind(
 #### ----   Write out regular time step for later reference -------------- #####
 ################################################################################
 
-saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5/VF2_step5.rds")
+saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5/VF3_step5.rds")
 
 
 
