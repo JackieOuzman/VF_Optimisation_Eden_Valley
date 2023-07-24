@@ -132,6 +132,8 @@ step1_2 <- step1_2 %>%
 
 
 #turn into spatial data
+step1_2 <- step1_2 %>% 
+  filter(!is.na(lon))
 
 step1_2_sf <-
   st_as_sf(step1_2,
@@ -205,6 +207,8 @@ step1_2 <- step1_2 %>%
 
 
 #turn into spatial data
+step1_2 <- step1_2 %>% 
+  filter(!is.na(lon))
 
 step1_2_sf <-
   st_as_sf(step1_2,
@@ -279,6 +283,8 @@ step1_2 <- step1_2 %>%
 
 
 #turn into spatial data
+step1_2 <- step1_2 %>% 
+  filter(!is.na(lon))
 
 step1_2_sf <-
   st_as_sf(step1_2,
