@@ -46,11 +46,11 @@ str(GPS_Dist)
 ################################################################################
 
 
-start <- min(GPS_Dist$local_time, na.rm = TRUE)  # "2019-05-20 20:10:17 ACST"
-end <-   max(GPS_Dist$local_time, na.rm = TRUE) # ""2019-05-21 00:10:00 ACST"
+start <- min(GPS_Dist$local_time, na.rm = TRUE)  # "019-05-20 10:40:17 ACSTT"
+end <-   max(GPS_Dist$local_time, na.rm = TRUE) # "2019-05-20 14:40:00 ACST"
 #Since we’re dealing with elapsed time between two dates, let’s start with Intervals. We can define an Interval using the %--% operator.
-start <- round_date(start, unit="10 mins") #2022-06-28 10:00:00 ACDT"
-end <- round_date(end, unit="10 mins") # "2022-07-02 10:10:00 ACDT"
+start <- round_date(start, unit="10 mins") #2019-05-20 10:40:00 ACST"
+end <- round_date(end, unit="10 mins") # "2019-05-20 14:40:00 ACST"
 
 time.interval <- start %--% end
 time.interval
@@ -101,7 +101,9 @@ dim(animal_list)
 ### List of sites I want to run analysis for:
 animal_list
 #sheep_list <- c(1:6)
-animal_list <- "Q10"
+#animal_list <- "Q10"
+animal_list <- animal_list$animal
+
 
 ### as a function
 for (animal_list in animal_list){
@@ -201,215 +203,46 @@ for (animal_list in animal_list){
   }       
 
 
-## --- up to here ----###
-file_list <- data.frame(name_df = paste0("GPS_animal_reg_time_step",c(1:10)))
+print(animal_list$animal)
+
+""  "" "" ""  "" ""  ""   ""  ""  ""  ""  ""  ""  ""  ""  ""  ""  ""  ""   "" 
 
 
-
-
-
-
-GPS_sheep_reg_time_step_all <- rbind(
-  GPS_sheep_reg_time_step1,
-  GPS_sheep_reg_time_step2,
-  GPS_sheep_reg_time_step3,
-  GPS_sheep_reg_time_step4,
-  GPS_sheep_reg_time_step5,
-  GPS_sheep_reg_time_step6
-  # GPS_sheep_reg_time_step7,
-  # GPS_sheep_reg_time_step8,
-  # GPS_sheep_reg_time_step9,
-  # GPS_sheep_reg_time_step10#,
-  # GPS_sheep_reg_time_step11,
-  # GPS_sheep_reg_time_step12,
-  # GPS_sheep_reg_time_step13,
-  # GPS_sheep_reg_time_step14,
-  # GPS_sheep_reg_time_step15,
-  # GPS_sheep_reg_time_step16,
-  # GPS_sheep_reg_time_step17,
-  # GPS_sheep_reg_time_step18,
-  # GPS_sheep_reg_time_step19,
-  # GPS_sheep_reg_time_step20,
-  # GPS_sheep_reg_time_step21,
-  # GPS_sheep_reg_time_step22,
-  # GPS_sheep_reg_time_step23,
-  # GPS_sheep_reg_time_step24,
-  # GPS_sheep_reg_time_step25,
-  # GPS_sheep_reg_time_step26,
-  # GPS_sheep_reg_time_step27,
-  # GPS_sheep_reg_time_step28,
-  # GPS_sheep_reg_time_step29,
-  # GPS_sheep_reg_time_step30,
-  # GPS_sheep_reg_time_step31,
-  # GPS_sheep_reg_time_step32,
-  # GPS_sheep_reg_time_step33,
-  # GPS_sheep_reg_time_step34,
-  # GPS_sheep_reg_time_step35,
-  # GPS_sheep_reg_time_step36
+GPS_animal_reg_time_step_all <- rbind(
+  GPS_animal_reg_time_stepQ10,
+  GPS_animal_reg_time_stepQ108,
+  GPS_animal_reg_time_stepQ109,
+  GPS_animal_reg_time_stepQ11,
+  GPS_animal_reg_time_stepQ110,
+  GPS_animal_reg_time_stepQ15,
+  GPS_animal_reg_time_stepQ2,
+  GPS_animal_reg_time_stepQ26,
+  GPS_animal_reg_time_stepQ27,
+  GPS_animal_reg_time_stepQ28,
+  GPS_animal_reg_time_stepQ29,
+  GPS_animal_reg_time_stepQ36,
+  GPS_animal_reg_time_stepQ42,
+  GPS_animal_reg_time_stepQ45,
+  GPS_animal_reg_time_stepQ46,
+  GPS_animal_reg_time_stepQ47,
+  GPS_animal_reg_time_stepQ51,
+  GPS_animal_reg_time_stepQ75,
+  GPS_animal_reg_time_stepQ8,
+  GPS_animal_reg_time_stepQ9
+  
   )
 
 
-##############################################################################
-### create a df with the time interval for each animal This is to see what time step all animals have in common not used later#####
-names(GPS_sheep_reg_time_step1)
-names(regular_time_interval)
 
-##animal 1 ###
-test1  <- GPS_sheep_reg_time_step1 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep1 =ID_jaxs)
-
-GPS_animal_reg_time <- left_join(regular_time_interval, test1)
-
-##animal 2 ###  
-test2  <- GPS_sheep_reg_time_step2 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep2 =ID_jaxs)
-GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test2)
-
-##animal 3 ###  
-test3  <- GPS_sheep_reg_time_step3 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep3 =ID_jaxs)
-GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test3)
-
-##animal 4 ###  
-test4  <- GPS_sheep_reg_time_step4 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep4 =ID_jaxs)
-GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test4)
-
-##animal 5 ###  
-test5  <- GPS_sheep_reg_time_step5 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep5 =ID_jaxs)
-GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test5)
-
-##animal 6 ###  
-test6  <- GPS_sheep_reg_time_step6 %>% 
-  select(time_step, ID_jaxs) %>% 
-  filter(!is.na(ID_jaxs)) %>% 
-  rename(sheep6 =ID_jaxs)
-GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test6)
-
-# ##animal 7 ###  
-# test7  <- GPS_sheep_reg_time_step7 %>% 
-#   select(time_step, ID_jaxs) %>% 
-#   filter(!is.na(ID_jaxs)) %>% 
-#   rename(sheep7 =ID_jaxs)
-# GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test7)
-# 
-# 
-# ##animal 8 ###  
-# test8  <- GPS_sheep_reg_time_step8 %>% 
-#   select(time_step, ID_jaxs) %>% 
-#   filter(!is.na(ID_jaxs)) %>% 
-#   rename(sheep8 =ID_jaxs)
-# GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test8)
-# 
-# ##animal 9 ###  
-# test9  <- GPS_sheep_reg_time_step9 %>% 
-#   select(time_step, ID_jaxs) %>% 
-#   filter(!is.na(ID_jaxs)) %>% 
-#   rename(sheep9 =ID_jaxs)
-# GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test9)
-# 
-# ##animal 10 ###  
-# test10  <- GPS_sheep_reg_time_step10 %>% 
-#   select(time_step, ID_jaxs) %>% 
-#   filter(!is.na(ID_jaxs)) %>% 
-#   rename(sheep10 =ID_jaxs)
-# GPS_animal_reg_time <- left_join(GPS_animal_reg_time, test10)
-
-
-GPS_animal_reg_time <- GPS_animal_reg_time %>% replace(is.na(.), "no_records")
-
-GPS_animal_reg_time <- GPS_animal_reg_time %>%
-  mutate(count_na = 
-           str_count(sheep1, "no_records") + str_count(sheep2, "no_records") + str_count(sheep3, "no_records")+
-           str_count(sheep4,"no_records") + str_count(sheep5, "no_records") + str_count(sheep6, "no_records")#+
-           # str_count(sheep7, "no_records") + str_count(sheep8, "no_records") + str_count(sheep9, "no_records")+
-           # str_count(sheep10, "no_records"
-           ) 
-         
-
-rm(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10)
-
-GPS_animal_reg_time <- GPS_animal_reg_time %>% 
-  filter(count_na == 0)
-
-GPS_animal_reg_time <- GPS_animal_reg_time %>% 
-  select(time_step)
 
 ################################################################################
 #### ----   Write out regular time step for later reference -------------- #####
 ################################################################################
 
-write.csv(GPS_animal_reg_time, "W:/VF/Optimising_VF/Chiswick/data_prep/GPS_animal_reg_time_common.csv", row.names = FALSE)
+saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5/VF1_step5.rds")
 
 
 
-
-rm(GPS_sheep_reg_time_step1,
-   GPS_sheep_reg_time_step2,
-   GPS_sheep_reg_time_step3,
-   GPS_sheep_reg_time_step4,
-   GPS_sheep_reg_time_step5,
-   GPS_sheep_reg_time_step6,
-   GPS_sheep_reg_time_step7,
-   GPS_sheep_reg_time_step8,
-   GPS_sheep_reg_time_step9,
-   GPS_sheep_reg_time_step10#,
-   # GPS_sheep_reg_time_step11,
-   # GPS_sheep_reg_time_step12,
-   # GPS_sheep_reg_time_step13,
-   # GPS_sheep_reg_time_step14,
-   # GPS_sheep_reg_time_step15,
-   # GPS_sheep_reg_time_step16,
-   # GPS_sheep_reg_time_step17,
-   # GPS_sheep_reg_time_step18,
-   # GPS_sheep_reg_time_step19,
-   # GPS_sheep_reg_time_step20,
-   # GPS_sheep_reg_time_step21,
-   # GPS_sheep_reg_time_step22,
-   # GPS_sheep_reg_time_step23,
-   # GPS_sheep_reg_time_step24,
-   # GPS_sheep_reg_time_step25,
-   # GPS_sheep_reg_time_step26,
-   # GPS_sheep_reg_time_step27,
-   # GPS_sheep_reg_time_step28,
-   # GPS_sheep_reg_time_step29,
-   # GPS_sheep_reg_time_step30,
-   # GPS_sheep_reg_time_step31,
-   # GPS_sheep_reg_time_step32,
-   # GPS_sheep_reg_time_step33,
-   # GPS_sheep_reg_time_step34,
-   # GPS_sheep_reg_time_step35,
-   # GPS_sheep_reg_time_step36
-   )
-
-##### Think about how to deal with yarding times - I think you may need to remove first step cal after yarding time.
-## I dont think I need to do anything here - the animals we yarded over night and the data is trimmed to this already.
-### If you had a yard in and out and the data wasnt trimmed this might be a problem.
-
-
-# It looks to be ok because the GPS log data has it removed already and  I am using this file to join the regular time step to the GPS data
-
-
-
-
-
-output_path <- "W:/VF/Optimising_VF/Chiswick/data_prep/"  #animals_GPS_trim_time
-
-
-write.csv(GPS_sheep_reg_time_step_all, 
-          paste0(output_path,"/step5_Greg_time_step_dist_travelled.csv"), 
-          row.names=FALSE)
 
 
 
