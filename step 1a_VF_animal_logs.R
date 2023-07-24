@@ -247,8 +247,8 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                         animal_ID = case_when(
                                           collar_ID == "ac138" ~ "Q46",
                                           collar_ID == "ac187" ~ "Q36",
-                                          #collar_ID == "ac204" ~ "Q108",
-                                          collar_ID == "ac220" ~ "Q108", # replaced with 220 on the 28th
+                                          collar_ID == "ac204" ~ "Q108",
+                                          #collar_ID == "ac220" ~ "Q108", # replaced with 220 on the 28th
                                           collar_ID == "ac207" ~ "Q42",
                                           collar_ID == "ac212" ~ "Q29",
                                           collar_ID == "ac213" &
@@ -286,6 +286,7 @@ VF4_InclusionBord <- mutate(VF4_InclusionBord,
 #check we are assignining all the collar ID to animal names
 head(VF4_InclusionBord)
 with(VF4_InclusionBord, table(date, animal_ID))
+with(VF4_InclusionBord, table(date, collar_ID))
 
 check <- rbind(VF1_InclusionBord, VF2_InclusionBord, VF3_InclusionBord, VF4_InclusionBord)
 
