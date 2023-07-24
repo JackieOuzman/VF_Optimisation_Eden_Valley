@@ -21,7 +21,7 @@ raw_data <- "W:/VF/Optimising_VF/raw_data/Eden_Valley/"
 # "\\pearceyhome.csiro.au\HOME_INTEL\ouz001\VF_cattle\catlle_pearcey_recal_dist\Re_cal\peracey_step1a_bring_in_data.R"
 #This just merges the raw data
 
-VF_week1_2_3_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/download2_R_output/VF_week1_2_3_InclusionBord.rds")
+VF_week1_2_3_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/download2_R_output/VF_week1_2_3.rds")
 dim(VF_week1_2_3_InclusionBord)
 ################################################################################
 ###                    Local local_time          #############
@@ -51,6 +51,7 @@ VF1_InclusionBord <- filter(VF_week1_2_3_InclusionBord,
 
 min(VF1_InclusionBord$local_time)
 max(VF1_InclusionBord$local_time)
+unique(VF1_InclusionBord$event) #"InclusionBorder_m is no pulse or audio
 ##########################################################################################################
 #############    assign the collar ID to animal ID  VF 1 ########################################################
 ##########################################################################################################
@@ -118,6 +119,7 @@ VF2_InclusionBord <- filter(VF_week1_2_3_InclusionBord,
                                     ymd_hms('2019-05-23 08:30:00', tz="Australia/Adelaide")))
 min(VF2_InclusionBord$local_time)
 max(VF2_InclusionBord$local_time)
+unique(VF2_InclusionBord$event) #"InclusionBorder_m is no pulse or audio
 ##########################################################################################################
 #############    assign the collar ID to animal ID  VF 21 ########################################################
 ##########################################################################################################
@@ -179,6 +181,7 @@ VF3_InclusionBord <- filter(VF_week1_2_3_InclusionBord,
                                     ymd_hms('2019-05-28 11:00:00', tz="Australia/Adelaide")))
 min(VF3_InclusionBord$local_time)
 max(VF3_InclusionBord$local_time)
+unique(VF3_InclusionBord$event) #"InclusionBorder_m is no pulse or audio
 
 VF3_InclusionBord <- mutate(VF3_InclusionBord,
                                         animal_ID = case_when(
@@ -242,6 +245,7 @@ VF4_InclusionBord <- filter(VF_week1_2_3_InclusionBord,
 
 min(VF4_InclusionBord$local_time)
 max(VF4_InclusionBord$local_time)
+unique(VF4_InclusionBord$event)
 
 VF4_InclusionBord <- mutate(VF4_InclusionBord,
                                         animal_ID = case_when(
@@ -306,6 +310,8 @@ saveRDS(VF4_InclusionBord,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF4
 
 VF_week3_4_5_6_7_InclusionBord <- readRDS("W:/VF/Eden_Valley/logged_VF_data/updated collar logs/VF_week3_4_5_6_7.rds")
 dim(VF_week3_4_5_6_7_InclusionBord)
+unique(VF_week3_4_5_6_7_InclusionBord$event)
+
 ################################################################################
 ###                    Local local_time          #############
 ################################################################################

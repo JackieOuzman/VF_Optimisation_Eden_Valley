@@ -16,7 +16,7 @@ library(sf)
 ################################################################################
 #### --------------    Bring in data   -------------- ####
 ################################################################################
-GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF2step3_clip.rds")
+GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF3step3_clip.rds")
 
 names(GPS_Dist)
 
@@ -87,7 +87,7 @@ time.interval
 #To create a Duration between these two dates, we can use the as.duration function.
 
 time.duration <- as.duration(time.interval)
-time.duration # "236400s (~2.74 days)"
+time.duration # "441000s (~5.1 days)"
 
 ################################################################################
 #### --------------    make a regular time step   -------------- ####
@@ -253,5 +253,5 @@ rm(GPS_animal_reg_time_stepQ10,
    )
 
 
-saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5b/VF2_step5b.rds")
+saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5b/VF3_step5b.rds")
 
