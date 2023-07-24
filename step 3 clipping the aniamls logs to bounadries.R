@@ -23,8 +23,6 @@ Hard_fence_bound <-
 #   st_transform(Chiswick_hard_fence_bound_buff, crs = 28354)
 
 
-VF1_paddock <-   st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/VF1_graze.shp")
-# VF_paddock <-  st_transform(VF_paddock, crs = 28354)
 
 ############################################################################################
 
