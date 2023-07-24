@@ -36,16 +36,7 @@ VF1_paddock <-   st_read("W:/VF/Optimising_VF/raw_data/Eden Valley/VF_Boundary/V
 
 
 step1_2 <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF1_InclusionBord.rds")
-
-#format time and date clm from character to time
-step1_2 <-  step1_2 %>%
-  mutate(timeOfEvent = as.POSIXct(time, tz = "GMT", format = "%d/%m/%Y %H:%M"))
-
-step1_2 <- step1_2 %>% 
-  mutate(GMT = ymd_hms(time, tz = "GMT"))
-
-step1_2 <- step1_2 %>% 
-  mutate(local_time = with_tz(GMT, tz = "Australia/Adelaide"))
+str(step1_2)
 
 ## Add a clm for ID_jaxs
 step1_2 <- step1_2 %>% 
@@ -83,15 +74,15 @@ step1_2_sf_clip <-
 
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF1_paddock, color = "black", fill = NA) +
-   geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
-   theme_bw()+
-   facet_wrap(.~ date)+
-   theme(legend.position = "none",
-         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-   labs(title = "clipped")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF1_paddock, color = "black", fill = NA) +
+#    geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
+#    theme_bw()+
+#    facet_wrap(.~ date)+
+#    theme(legend.position = "none",
+#          axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#    labs(title = "clipped")
 
 ## convert the geom clm into x and y clms
 
@@ -113,9 +104,7 @@ step1_2_sf_clip_df <-   cbind(step1_2_sf_clip_df,coordinates )
 path_output_files <- "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/" 
 path_output_files
 saveRDS(step1_2_sf_clip_df,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF1step3_clip.rds")
-# write.csv(step1_2_sf_clip_df, 
-#           paste0(path_output_files,"/VF1step3_clip.csv"), 
-#           row.names=FALSE)
+
 rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 
 
@@ -127,14 +116,6 @@ rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 step1_2 <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF2_InclusionBord.rds")
 
 #format time and date clm from character to time
-step1_2 <-  step1_2 %>%
-  mutate(timeOfEvent = as.POSIXct(time, tz = "GMT", format = "%d/%m/%Y %H:%M"))
-
-step1_2 <- step1_2 %>% 
-  mutate(GMT = ymd_hms(time, tz = "GMT"))
-
-step1_2 <- step1_2 %>% 
-  mutate(local_time = with_tz(GMT, tz = "Australia/Adelaide"))
 
 ## Add a clm for ID_jaxs
 step1_2 <- step1_2 %>% 
@@ -172,15 +153,15 @@ step1_2_sf_clip <-
 
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF1_paddock, color = "black", fill = NA) +
-  geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
-  theme_bw()+
-  facet_wrap(.~ date)+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "clipped")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF1_paddock, color = "black", fill = NA) +
+#   geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
+#   theme_bw()+
+#   facet_wrap(.~ date)+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "clipped")
 
 ## convert the geom clm into x and y clms
 
@@ -197,9 +178,7 @@ step1_2_sf_clip_df <-   cbind(step1_2_sf_clip_df,coordinates )
 path_output_files <- "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/" 
 path_output_files
 saveRDS(step1_2_sf_clip_df,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF2step3_clip.rds")
-# write.csv(step1_2_sf_clip_df, 
-#           paste0(path_output_files,"/VF2step3_clip.csv"), 
-#           row.names=FALSE)
+
 rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 
 ###############################################################################
@@ -209,14 +188,7 @@ rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 step1_2 <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF3_InclusionBord.rds")
 
 #format time and date clm from character to time
-step1_2 <-  step1_2 %>%
-  mutate(timeOfEvent = as.POSIXct(time, tz = "GMT", format = "%d/%m/%Y %H:%M"))
 
-step1_2 <- step1_2 %>% 
-  mutate(GMT = ymd_hms(time, tz = "GMT"))
-
-step1_2 <- step1_2 %>% 
-  mutate(local_time = with_tz(GMT, tz = "Australia/Adelaide"))
 
 ## Add a clm for ID_jaxs
 step1_2 <- step1_2 %>% 
@@ -254,15 +226,15 @@ step1_2_sf_clip <-
 
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF1_paddock, color = "black", fill = NA) +
-  geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
-  theme_bw()+
-  facet_wrap(.~ date)+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "clipped")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF1_paddock, color = "black", fill = NA) +
+#   geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
+#   theme_bw()+
+#   facet_wrap(.~ date)+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "clipped")
 
 ## convert the geom clm into x and y clms
 
@@ -278,9 +250,7 @@ step1_2_sf_clip_df <-   cbind(step1_2_sf_clip_df,coordinates )
 
 path_output_files <- "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/" 
 path_output_files
-# write.csv(step1_2_sf_clip_df, 
-#           paste0(path_output_files,"/VF3step3_clip.csv"), 
-#           row.names=FALSE)
+
 saveRDS(step1_2_sf_clip_df,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF3step3_clip.rds")
 rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 
@@ -293,14 +263,6 @@ rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 step1_2 <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF4_InclusionBord.rds")
 
 #format time and date clm from character to time
-step1_2 <-  step1_2 %>%
-  mutate(timeOfEvent = as.POSIXct(time, tz = "GMT", format = "%d/%m/%Y %H:%M"))
-
-step1_2 <- step1_2 %>% 
-  mutate(GMT = ymd_hms(time, tz = "GMT"))
-
-step1_2 <- step1_2 %>% 
-  mutate(local_time = with_tz(GMT, tz = "Australia/Adelaide"))
 
 ## Add a clm for ID_jaxs
 step1_2 <- step1_2 %>% 
@@ -338,15 +300,15 @@ step1_2_sf_clip <-
 
 
 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF1_paddock, color = "black", fill = NA) +
-  geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
-  theme_bw()+
-  facet_wrap(.~ date)+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "clipped")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF1_paddock, color = "black", fill = NA) +
+#   geom_sf(data = step1_2_sf_clip ,alpha = 0.03) +
+#   theme_bw()+
+#   facet_wrap(.~ date)+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "clipped")
 
 ## convert the geom clm into x and y clms
 
@@ -362,9 +324,7 @@ step1_2_sf_clip_df <-   cbind(step1_2_sf_clip_df,coordinates )
 
 path_output_files <- "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/" 
 path_output_files
-# write.csv(step1_2_sf_clip_df, 
-#           paste0(path_output_files,"/VF3step3_clip.csv"), 
-#           row.names=FALSE)
+
 saveRDS(step1_2_sf_clip_df,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF4step3_clip.rds")
 
 rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
@@ -377,14 +337,7 @@ rm(step1_2, step1_2_sf, step1_2_sf_clip, step1_2_sf_clip_df)
 step1_2 <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step1/VF5_InclusionBord.rds")
 
 #format time and date clm from character to time
-step1_2 <-  step1_2 %>%
-  mutate(timeOfEvent = as.POSIXct(time, tz = "GMT", format = "%d/%m/%Y %H:%M"))
 
-step1_2 <- step1_2 %>% 
-  mutate(GMT = ymd_hms(time, tz = "GMT"))
-
-step1_2 <- step1_2 %>% 
-  mutate(local_time = with_tz(GMT, tz = "Australia/Adelaide"))
 
 ## Add a clm for ID_jaxs
 step1_2 <- step1_2 %>% 
@@ -427,15 +380,15 @@ step1_2_sf_clip <-
 
 
 #GPS_sf_trans %>% filter(date == "2019-06-28") %>% 
-ggplot() +
-  geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
-  geom_sf(data = VF1_paddock, color = "black", fill = NA) +
-  geom_sf(data = GPS_sf_trans ,alpha = 0.03) +
-  theme_bw()+
-  facet_wrap(.~ date)+
-  theme(legend.position = "none",
-        axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
-  labs(title = "clipped")
+# ggplot() +
+#   geom_sf(data = Hard_fence_bound, color = "black", fill = NA) +
+#   geom_sf(data = VF1_paddock, color = "black", fill = NA) +
+#   geom_sf(data = GPS_sf_trans ,alpha = 0.03) +
+#   theme_bw()+
+#   facet_wrap(.~ date)+
+#   theme(legend.position = "none",
+#         axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())+
+#   labs(title = "clipped")
 
 ## convert the geom clm into x and y clms
 
