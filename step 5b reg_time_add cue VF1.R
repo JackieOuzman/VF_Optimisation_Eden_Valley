@@ -58,18 +58,46 @@ GPS_Dist <- mutate(GPS_Dist,
 
 ### by animals cal the running cumulative totals
 GPS_Dist <- GPS_Dist %>% 
-  arrange(animal_ID, local_time) %>% 
-  group_by(animal_ID) %>% mutate(cumulativeAudioCount = cumsum(Audio))
+  #arrange(animal_ID, local_time) %>% 
+  group_by(animal_ID) %>% 
+  mutate(cumulativeAudioCount1 = cumsum(ifelse(is.na(Audio), 0, Audio)) + Audio*0) #bit of extra code to deal with the NA
 
 GPS_Dist <- GPS_Dist %>% 
   arrange(animal_ID, local_time) %>% 
-  group_by(animal_ID) %>% mutate(cumulativeShockCount = cumsum(Pulse))
+  group_by(animal_ID) %>% 
+  mutate(cumulativeShockCount1 = cumsum(ifelse(is.na(Pulse), 0, Pulse)) + Pulse*0) #bit of extra code to deal with the NA
+
+  GPS_Dist <- ungroup(GPS_Dist)
+
+### replace the missing data with the above cum value
+  
+GPS_Dist<- GPS_Dist %>% 
+    mutate(cumulativeShockCount = cumulativeShockCount1) %>% 
+    arrange(animal_ID, local_time) %>% 
+    group_by(animal_ID) %>% 
+    fill(cumulativeShockCount)
+
+GPS_Dist<- GPS_Dist %>% 
+  mutate(cumulativeAudioCount = cumulativeAudioCount1) %>% 
+  arrange(animal_ID, local_time) %>% 
+  group_by(animal_ID) %>% 
+  fill(cumulativeAudioCount)
+  
+
+## remove the clms I no longer need
+GPS_Dist <- GPS_Dist %>% 
+  dplyr::select(-cumulativeShockCount1,
+                -cumulativeAudioCount1,
+                -Pulse,
+                -Audio
+                )
 
 GPS_Dist <- ungroup(GPS_Dist)
 
 str(GPS_Dist)
-
-
+unique(GPS_Dist$event) #"InclusionBorder_m is no pulse or audio
+unique(GPS_Dist$cumulativeAudioCount) #"check to see if above code is working - i.e. I have number so its working!
+unique(GPS_Dist$cumulativeShockCount) #"
 
 ################################################################################
 #### --------------    what is the length of the trail?   -------------- ####
@@ -143,11 +171,44 @@ for (animal_list in animal_list){
   GPS_animal <- GPS_Dist %>%  filter(animal == animal_list)
   
    
-  ## the occurrence of a duplicated time_animal
+  ## the occurrence of a duplicated time_animal, but I want to retain the max audio and max pulse values - its a 3 step process
   
-  GPS_animal <- GPS_animal %>% 
+  ##for max audio
+  GPS_animal_audio_retain_step1 <- GPS_animal %>% 
+    group_by(Time_animal, ID_jaxs) %>% 
+    summarise(cumulativeAudioCount_max = max(cumulativeAudioCount, na.rm = TRUE))
+  
+  GPS_animal_audio_retain <- GPS_animal_audio_retain_step1 %>% 
     distinct(Time_animal, .keep_all = TRUE)
- 
+  
+  
+  GPS_animal_audio_retain <- as.list(GPS_animal_audio_retain$ID_jaxs)
+  GPS_animal_audio <- GPS_animal %>% filter(ID_jaxs %in% GPS_animal_audio_retain)
+  GPS_animal_audio <- GPS_animal_audio %>% dplyr::select(-cumulativeShockCount )
+  
+  ##for max pulse
+  
+  GPS_animal_pulse_retain_step1 <- GPS_animal %>% 
+    group_by(Time_animal, ID_jaxs) %>% 
+    summarise(cumulativeShockCount_max = max(cumulativeShockCount, na.rm = TRUE))
+  
+  GPS_animal_pulse_retain <- GPS_animal_pulse_retain_step1 %>% 
+    distinct(Time_animal, .keep_all = TRUE)
+  
+  
+  GPS_animal_pulse_retain <- as.list(GPS_animal_pulse_retain$ID_jaxs)
+  GPS_animal_pulse <- GPS_animal %>% filter(ID_jaxs %in% GPS_animal_pulse_retain)
+  GPS_animal_pulse <- GPS_animal_pulse %>% dplyr::select(cumulativeShockCount, Time_animal )
+  
+  tail(GPS_animal_audio)
+  tail(GPS_animal_pulse)
+  
+  GPS_animal <- left_join(GPS_animal_audio, GPS_animal_pulse)
+  rm(GPS_animal_pulse_retain, GPS_animal_pulse_retain_step1, GPS_animal_pulse, 
+     GPS_animal_audio_retain, GPS_animal_audio_retain_step1, GPS_animal_audio)
+  
+###############################################################################  
+  
   
   
   GPS_animal[ is.na(GPS_animal) ] <- 0
