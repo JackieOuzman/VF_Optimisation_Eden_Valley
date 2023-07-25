@@ -16,7 +16,7 @@ library(sf)
 ################################################################################
 #### --------------    Bring in data   -------------- ####
 ################################################################################
-GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF2step3_clip.rds")
+GPS_Dist <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step3/VF5step3_clip.rds")
 
 names(GPS_Dist)
 
@@ -107,15 +107,15 @@ unique(GPS_Dist$cumulativeShockCount) #"
 start <- min(GPS_Dist$local_time, na.rm = TRUE)  # 
 end <-   max(GPS_Dist$local_time, na.rm = TRUE) #
 #Since we’re dealing with elapsed time between two dates, let’s start with Intervals. We can define an Interval using the %--% operator.
-start <- round_date(start, unit="10 mins") #2019-05-20 10:40:00 ACST"
-end <- round_date(end, unit="10 mins") # "2019-05-20 14:40:00 ACST"
+start <- round_date(start, unit="10 mins") #"
+end <- round_date(end, unit="10 mins") # ""
 
 time.interval <- start %--% end
 time.interval
 #To create a Duration between these two dates, we can use the as.duration function.
 
 time.duration <- as.duration(time.interval)
-time.duration # "236400s (~2.74 days)"
+time.duration # "2493600s (~4.12 weeks)"
 
 ################################################################################
 #### --------------    make a regular time step   -------------- ####
@@ -314,5 +314,5 @@ rm(GPS_animal_reg_time_stepQ10,
    )
 
 
-saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5b/VF2_step5b.rds")
+saveRDS(GPS_animal_reg_time_step_all,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5b/VF5_step5b.rds")
 
