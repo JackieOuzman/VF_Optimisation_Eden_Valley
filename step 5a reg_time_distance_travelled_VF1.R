@@ -205,7 +205,7 @@ for (animal_list in animal_list){
 
 print(animal_list$animal)
 
-""  "" "" ""  "" ""  ""   ""  ""  ""  ""  ""  ""  ""  ""  ""  ""  ""  ""   "" 
+
 
 
 GPS_animal_reg_time_step_all <- rbind(
