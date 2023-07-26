@@ -157,7 +157,7 @@ for (animal_list in animal_list){
 
 
 saveRDS(df, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF2_step6_dist_between_animals_matrix.rds")
-
+rm(list = ls())
 ################  VF3  ################ 
 
 GPS_animal <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/VF3_step5c.rds")
@@ -232,7 +232,7 @@ for (animal_list in animal_list){
 
 
 saveRDS(df, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF3_step6_dist_between_animals_matrix.rds")
-
+rm(list = ls())
 
 ################  VF4  ################ 
 
@@ -308,7 +308,7 @@ for (animal_list in animal_list){
 
 
 saveRDS(df, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF4_step6_dist_between_animals_matrix.rds")
-
+rm(list = ls())
 
 ################  VF5  ################ 
 
@@ -384,4 +384,4 @@ for (animal_list in animal_list){
 
 
 saveRDS(df, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF5_step6_dist_between_animals_matrix.rds")
-
+rm(list = ls())
