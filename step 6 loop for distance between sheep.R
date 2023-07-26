@@ -18,7 +18,7 @@ df <- reg_time_step %>%  arrange(time_step)
 list_of_comparsions <- read_excel("W:/VF/Optimising_VF/Eden Valley/data_prep/list of animal comparisons.xlsx", 
                                   sheet = "dist_between_animals")
 
-list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1")
+#list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1") #nope I think I want all the replication
 list_of_comparsions_x <- list_of_comparsions #I will use all the animal no treatment grouping
 animal_list_x <- list_of_comparsions_x
 
@@ -29,6 +29,10 @@ animal_list_x <- c(animal_list_x$comparison)
 
 animal_list <- animal_list_x
 df <- reg_time_step %>%  arrange(time_step)
+
+
+#animal_list <- "distQ10vsQ108"
+
 
 for (animal_list in animal_list){
   
@@ -77,8 +81,8 @@ for (animal_list in animal_list){
 
 
 
-saveRDS(df, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF1_step6_dist_between_animals_matrix.rds")
-
+saveRDS(df,       "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF1_step6_dist_between_animals_matrix.rds")
+write.csv(matrix, "W:/VF/Optimising_VF/Eden Valley/data_prep/step6/VF1_step6_dist_between_animals_matrix.csv")
 ################  VF  ################ 
 
 GPS_animal <- readRDS("W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/VF2_step5c.rds")
@@ -93,7 +97,7 @@ df <- reg_time_step %>%  arrange(time_step)
 list_of_comparsions <- read_excel("W:/VF/Optimising_VF/Eden Valley/data_prep/list of animal comparisons.xlsx", 
                                   sheet = "dist_between_animals")
 
-list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1")
+
 list_of_comparsions_x <- list_of_comparsions #I will use all the animal no treatment grouping
 animal_list_x <- list_of_comparsions_x
 
@@ -168,7 +172,7 @@ df <- reg_time_step %>%  arrange(time_step)
 list_of_comparsions <- read_excel("W:/VF/Optimising_VF/Eden Valley/data_prep/list of animal comparisons.xlsx", 
                                   sheet = "dist_between_animals")
 
-list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1")
+
 list_of_comparsions_x <- list_of_comparsions #I will use all the animal no treatment grouping
 animal_list_x <- list_of_comparsions_x
 
@@ -244,7 +248,7 @@ df <- reg_time_step %>%  arrange(time_step)
 list_of_comparsions <- read_excel("W:/VF/Optimising_VF/Eden Valley/data_prep/list of animal comparisons.xlsx", 
                                   sheet = "dist_between_animals")
 
-list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1")
+
 list_of_comparsions_x <- list_of_comparsions #I will use all the animal no treatment grouping
 animal_list_x <- list_of_comparsions_x
 
@@ -320,7 +324,7 @@ df <- reg_time_step %>%  arrange(time_step)
 list_of_comparsions <- read_excel("W:/VF/Optimising_VF/Eden Valley/data_prep/list of animal comparisons.xlsx", 
                                   sheet = "dist_between_animals")
 
-list_of_comparsions <- list_of_comparsions %>%  filter(replication == "replication1")
+
 list_of_comparsions_x <- list_of_comparsions #I will use all the animal no treatment grouping
 animal_list_x <- list_of_comparsions_x
 
