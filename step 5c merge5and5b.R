@@ -25,6 +25,11 @@ all_step5 <- left_join(step5, step5b)
 str(all_step5)
 saveRDS(all_step5,  "W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/VF1_step5c.rds")
 
+write.csv(step5, "W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/check/VF1_step5a.csv")
+write.csv(step5b, "W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/check/VF1_step5b.csv")
+write.csv(all_step5, "W:/VF/Optimising_VF/Eden Valley/data_prep/step5c/check/VF1_step5c.csv")
+
+
 rm(step5,step5b, all_step5)
 
 ################################################################################
