@@ -15,7 +15,7 @@ library(ggpubr)
 # library(ggexport)
 # install.packages("ggexport")
 
-Summary_df_for_plots <- read_csv("W:/VF/Optimising_VF/Chiswick/data_prep/step9_RF_for_plots.csv")
+Summary_df_for_plots <- read_csv("W:/VF/Optimising_VF/Eden Valley/data_prep/step9/step9.csv")
 
 
 ################################################################################
@@ -100,45 +100,45 @@ distance_plots
 ################################################################################
 ## Plots for behaviour 
 ################################################################################
-str(Summary_df_for_plots)
-
-Mean_resting <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_resting, 
-                                                 fill = compliance_score)) + 
-  geom_bar(stat= "identity", position=position_dodge())+
-  ylim(0, 100)+
-  theme(legend.position="none")+
-  labs(title="Mean proportion \nof time spent resting", 
-       x="", 
-       y = "mean")+
-  scale_fill_manual(values=c("#999999",  "darkseagreen"))
-
-Mean_grazing <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_grazing, 
-                                                 fill = compliance_score)) + 
-  geom_bar(stat= "identity", position=position_dodge())+
-  ylim(0, 100)+
-  theme(legend.position="none")+
-  labs(title="Mean proportion \nof time spent grazing", 
-       x="", 
-       y = "mean")+
-  scale_fill_manual(values=c("#999999",  "darkseagreen"))
-
-Mean_moving <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_moving, 
-                                                 fill = compliance_score)) + 
-  geom_bar(stat= "identity", position=position_dodge())+
-  ylim(0, 100)+
-  theme(legend.position="none")+
-  labs(title="Mean proportion \nof time spent moving", 
-       x="", 
-       y = "mean")+
-  scale_fill_manual(values=c("#999999",  "darkseagreen"))
-
-behaviour_plots <- ggarrange(Mean_resting, Mean_grazing, 
-                             Mean_moving , 
-                            
-                            labels = c("A", "B", "C"),
-                            ncol = 2, nrow = 2)
-
-behaviour_plots
+# str(Summary_df_for_plots)
+# 
+# Mean_resting <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_resting, 
+#                                                  fill = compliance_score)) + 
+#   geom_bar(stat= "identity", position=position_dodge())+
+#   ylim(0, 100)+
+#   theme(legend.position="none")+
+#   labs(title="Mean proportion \nof time spent resting", 
+#        x="", 
+#        y = "mean")+
+#   scale_fill_manual(values=c("#999999",  "darkseagreen"))
+# 
+# Mean_grazing <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_grazing, 
+#                                                  fill = compliance_score)) + 
+#   geom_bar(stat= "identity", position=position_dodge())+
+#   ylim(0, 100)+
+#   theme(legend.position="none")+
+#   labs(title="Mean proportion \nof time spent grazing", 
+#        x="", 
+#        y = "mean")+
+#   scale_fill_manual(values=c("#999999",  "darkseagreen"))
+# 
+# Mean_moving <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_moving, 
+#                                                  fill = compliance_score)) + 
+#   geom_bar(stat= "identity", position=position_dodge())+
+#   ylim(0, 100)+
+#   theme(legend.position="none")+
+#   labs(title="Mean proportion \nof time spent moving", 
+#        x="", 
+#        y = "mean")+
+#   scale_fill_manual(values=c("#999999",  "darkseagreen"))
+# 
+# behaviour_plots <- ggarrange(Mean_resting, Mean_grazing, 
+#                              Mean_moving , 
+#                             
+#                             labels = c("A", "B", "C"),
+#                             ncol = 2, nrow = 2)
+# 
+# behaviour_plots
 ################################################################################
 ## Plots for cues 
 ################################################################################
@@ -213,11 +213,11 @@ cue_plots
 ## Plots for animals close 
 ################################################################################
 str(Summary_df_for_plots)
-Mean_animals_close <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_numb_sheep_close, 
+Mean_animals_close <- ggplot(Summary_df_for_plots, aes(x=behaviour_stage, y=mean_numb_animal_close, 
                                                        fill = compliance_score)) + 
   geom_bar(stat= "identity", position=position_dodge())+
   #theme(legend.position="none")+
-  labs(title="Mean number \nof sheep that are close", 
+  labs(title="Mean number \nof animals that are close", 
        x="", 
        y = "mean")+
   scale_fill_manual(values=c("#999999",  "blue"))
@@ -231,9 +231,9 @@ cue_plots
 Mean_animals_close
 
 getwd()
-
-ggexport(distance_plots, filename = "W:/VF/Optimising_VF/Chiswick/plots_pre_RF/test_distance_plots.png")
-ggexport(behaviour_plots, filename = "W:/VF/Optimising_VF/Chiswick/plots_pre_RF/test_behaviour_plots.png")
-ggexport(cue_plots, filename = "W:/VF/Optimising_VF/Chiswick/plots_pre_RF/test_cue_plots.png")
-ggexport(Mean_animals_close, filename = "W:/VF/Optimising_VF/Chiswick/plots_pre_RF/test_Mean_animals_close.png")
+                                    
+ggexport(distance_plots, filename =     "W:/VF/Optimising_VF/Eden Valley/data_prep/plots/distance_plots.png")
+#ggexport(behaviour_plots, filename =   "W:/VF/Optimising_VF/Eden Valley/data_prep/plots/behaviour_plots.png")
+ggexport(cue_plots, filename =          "W:/VF/Optimising_VF/Eden Valley/data_prep/plots/cue_plots.png")
+ggexport(Mean_animals_close, filename = "W:/VF/Optimising_VF/Eden Valley/data_prep/plots/Mean_animals_close.png")
 
